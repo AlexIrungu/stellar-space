@@ -1,92 +1,76 @@
 import React, { useEffect, useState } from "react";
 
 function NearEarthObject() {
+    const [nearEarth, setNearEarth] = useState([]);
 
-    const [nearEarth , setNearEarth] = useState([])
-   // const[dataArray,setArray] = useState([])
-
-        
-  useEffect(() => {
+    useEffect(() => {
         fetch("https://api.nasa.gov/neo/rest/v1/feed?start_date=2015-09-07&end_date=2015-09-08&api_key=VI5CvDgJOt8j8mMVZ9NPoRMYJ1LbndXqxLDpFhzK")
-        .then (res => res.json())
+        .then(res => res.json())
         .then(data => {
             setNearEarth(data.near_earth_objects['2015-09-08'])
-            
         })
-    },[])
+        .catch(error => console.error("Error fetching NASA NEO data:", error));
+    }, []);
 
-
-     console.log(nearEarth["2015-09-08"])
-
-
-     
-    // let customData = [nearEarth["2015-09-07"]]
-    // console.log(customData);
-    //console.log({customData});
-
-    let customList = nearEarth.map((item)=>{
-        return (<h1> {item.estimated_diameter.kilometers.estimated_diameter_max} </h1>)
-    })
-    let customData = nearEarth.map((item) => {
-        return (<h2> {item.nasa_jpl_url}</h2>)
-    })
-    let customApproach = nearEarth.map((item) => {
-        return (<h3>{item.close_approach_data[0].relative_velocity.kilometers_per_second}</h3>)
-    })
-    let customDistance = nearEarth.map((item) => {
-        return (<h4>{item.close_approach_data[0].miss_distance.astronomical}</h4>)
-    })
-    let customOrbit = nearEarth.map((item) => {
-        return (<h5>{item.close_approach_data[0].orbiting_body}</h5>)
-    })
-    let customHazard = nearEarth.map((item) => {
-        return (<h6>{item.neo_reference_id}</h6>)
-})
-
-    console.log(customList);
-    console.log(customData);
-    console.log("custom",customApproach);
-    console.log(customDistance);
-    console.log(customHazard);
-        
- 
-  
     return (
-      <div className="near" style={{ display: 'block', width: 700, padding: 30 }}>
-         <h1>STELLAR SPACE ACTIVITY</h1>
-        <table>
-            <tr>
-                <th>Estimated Kilometer Max</th>
-                <th>NAME</th>
-                <th>CUSTOM APPROACH DATA</th>
-                <th>CUSTOM DISTANCE</th>
-                <th>CUSTOM ORBIT</th>
-                <th>CUSTOM HAZARD</th>
-            </tr>
-            <tr>
-                <td>{customList}</td>
-                <td>{customData}</td>
-                <td>{customApproach}</td>
-                <td> {customDistance} </td>
-                <td>{customOrbit}</td>
-                <td>{customHazard}</td>
-            </tr>
-            
-       
-        {/* <p>Estimated Kilometer Max</p>
-        {customList}
-        <p>NAME</p>
-        {customData}
-        <p>CUSTOM APPROACH DATA</p>
-        {customApproach}
-         <p>CUSTOM DISTANCE</p>
-        {customDistance} 
-        <p>CUSTOM ORBIT</p>
-        {customOrbit}
-        <p>CUSTOM HAZARD</p>
-        {customHazard} */}
-        </table>
-      </div>
+        <div className="container mx-auto p-6">
+            <div className="bg-white shadow-xl rounded-lg overflow-hidden">
+                <div className="bg-blue-600 text-white text-center py-16">
+                    <h1 className="text-3xl font-bold">Stellar Space Activity</h1>
+                </div>
+                <div className="p-4">
+                    <div className="overflow-x-auto">
+                        <table className="w-full border-collapse">
+                            <thead className="bg-blue-100">
+                                <tr>
+                                    <th className="p-3 text-left border">Max Diameter (km)</th>
+                                    <th className="p-3 text-left border">NASA URL</th>
+                                    <th className="p-3 text-left border">Velocity (km/s)</th>
+                                    <th className="p-3 text-left border">Miss Distance</th>
+                                    <th className="p-3 text-left border">Orbiting Body</th>
+                                    <th className="p-3 text-left border">Reference ID</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {nearEarth.map((item, index) => (
+                                    <tr 
+                                        key={item.neo_reference_id} 
+                                        className={`${index % 2 === 0 ? 'bg-white' : 'bg-gray-50'} hover:bg-blue-50`}
+                                    >
+                                        <td className="p-3 border">
+                                            {parseFloat(item.estimated_diameter.kilometers.estimated_diameter_max).toFixed(2)}
+                                        </td>
+                                        <td className="p-3 border">
+                                            <a 
+                                                href={item.nasa_jpl_url} 
+                                                target="_blank" 
+                                                rel="noopener noreferrer" 
+                                                className="text-blue-500 hover:underline"
+                                            >
+                                                View Details
+                                            </a>
+                                        </td>
+                                        <td className="p-3 border">
+                                            {parseFloat(item.close_approach_data[0].relative_velocity.kilometers_per_second).toFixed(2)}
+                                        </td>
+                                        <td className="p-3 border">
+                                            {parseFloat(item.close_approach_data[0].miss_distance.astronomical).toFixed(4)}
+                                        </td>
+                                        <td className="p-3 border">
+                                            {item.close_approach_data[0].orbiting_body}
+                                        </td>
+                                        <td className="p-3 border">
+                                            {item.neo_reference_id}
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     );
-  }
- export default  NearEarthObject;
+}
+
+export default NearEarthObject;

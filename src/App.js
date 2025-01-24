@@ -1,49 +1,36 @@
 import React from 'react';
-import './App.css';
-import MarsWeather from './Components/MarsWeather';
-import NasaPicture from './Components/NasaPIcture';
-import NearEarthObject from './Components/NearEarthObject';
-import Navbar from './Components/Navbar';
-import Image from './Components/Image';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import Layout from './Components/Layout';
 import Home from './Components/Home';
+import NearEarthObject from './Components/NearEarthObject';
+import NasaPicture from './Components/NasaPIcture';
+import MarsWeather from './Components/MarsWeather';
+import Image from './Components/Image';
 import MapAsteroids from './Components/MapAsteroids';
-import LoginForm from './Components/LoginForm';
-import SignUpForm from './Components/SignUpForm';
 import LandingPageNav from './Components/LandingPageNav';
-import { Switch,Route } from 'react-router-dom';
+import NASAImageLibrary from './Components/NasaImageLibrary';
+import TrekMosaicsExplorer from './Components/TrekMosaicsExplorer';
 
-
-function App (){
-
-return (
-   <div>
-   
-    
-   
-    <Switch>
-    <Route exact path="/">
-        <LandingPageNav />
-        <Home />
-        </Route>
-    <Route path="/home">
-         <Navbar />
-         <Home />
-         </Route>
-     <Route path="/login"> <LoginForm /></Route>
-     <Route path="/signup"><SignUpForm /></Route>
-    <Route path="/objects"> <NearEarthObject /></Route>
-    <Route path="/nasa-picture"> <NasaPicture /></Route>
-    <Route path="/mars-weather"><MarsWeather /></Route>
-    <Route path="/mars-photos"><Image /></Route>
-    <Route path="/map-asteroids"><MapAsteroids /></Route>
-    {/* <Route exact path="/"><Home /></Route>
-    <Route  path="/home"><Home /></Route> */}
-    
-    </Switch>
-    </div>
-)
+function App() {
+    return (
+        <Router>
+            <Switch>
+                <Route exact path="/" component={LandingPageNav} />
+                <Layout>
+                    <Switch>
+                        <Route path="/home" component={Home} />
+                        <Route path="/objects" component={NearEarthObject} />
+                        <Route path="/nasa-picture" component={NasaPicture} />
+                        <Route path="/mars-weather" component={MarsWeather} />
+                        <Route path="/mars-photos" component={Image} />
+                        <Route path="/map-asteroids" component={MapAsteroids} />
+                        <Route path="/nasa-library" component={NASAImageLibrary} />
+                        <Route path="/trek" component={TrekMosaicsExplorer} />
+                    </Switch>
+                </Layout>
+            </Switch>
+        </Router>
+    );
 }
-
-
 
 export default App;
