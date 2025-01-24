@@ -24,7 +24,7 @@ function LandingPageNav() {
 
             <nav className="relative z-20 container mx-auto flex justify-between items-center p-4">
                 <Link 
-                    to="/" 
+                    to="/home" 
                     className="text-white text-4xl font-extrabold tracking-wider 
                     bg-clip-text text-transparent bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 
                     animate-pulse hover:scale-105 transition-all duration-300 ease-in-out"

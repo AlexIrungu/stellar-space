@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/stellar-space/static/css/main.4a0dd12a.css",
+    "main.js": "/stellar-space/static/js/main.0b35192a.js",
+    "static/media/Pexels-video.mp4": "/stellar-space/static/media/Pexels-video.217bc138c2eb8d98fc50.mp4",
+    "index.html": "/stellar-space/index.html",
+    "main.4a0dd12a.css.map": "/stellar-space/static/css/main.4a0dd12a.css.map",
+    "main.0b35192a.js.map": "/stellar-space/static/js/main.0b35192a.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.4a0dd12a.css",
+    "static/js/main.0b35192a.js"
+  ]
+}
